@@ -22,4 +22,4 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           push: true
-          tags: marcinzc/pace-planner:latest
+          tags: marcinzc/pace-planner:$NOW_SUFFIX

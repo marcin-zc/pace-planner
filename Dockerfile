@@ -8,6 +8,8 @@ WORKDIR /app
 
 # Install dependencies based on the preferred package manager
 COPY package.json package-lock.json ./
+
+#For generation node_modules you need only package.json and package-lock.json. Below command generate node_modules directory
 RUN npm ci;
 
 # Rebuild the source code only when needed
@@ -54,3 +56,8 @@ ENV PORT 3000
 # server.js is created by next build from the standalone output
 # https://nextjs.org/docs/pages/api-reference/next-config-js/output
 CMD HOSTNAME="0.0.0.0" node server.js
+
+# for running docker images follow for these steps:
+# docker build -t pace-planner .
+# docker run -it -p 3000:3000 pace-planner /bin/sh -if you want open container and go there
+# docker run -p 3000:3000 pace-planner -if you want only run container

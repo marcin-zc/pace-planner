@@ -1,5 +1,6 @@
 'use client'
 
+import styles from './page.module.css';
 import {useState} from "react";
 
 const distanceMarathon = 42.195;
@@ -15,23 +16,21 @@ function Marathon() {
     }
 
     return (
-        <>
-            <h1>Marathon</h1>
-            <div>
-                <div>
-                    <label>Time:</label>
-                    <input type='text' onChange={(e) => setTime(e.target.value)} placeholder="HH:MM:SS"/>
-                </div>
-                <div>
-                    <button onClick={calculatePace}>Calculate</button>
-                </div>
+        <div className={styles.marathon}>
+            <div className={styles.item}>Marathon</div>
+            <div className={styles.item}>
+                <label className={styles.right}>Time:</label>
+                <input type='text' onChange={(e) => setTime(e.target.value)} placeholder="HH:MM:SS"/>
+            </div>
+            <div className={styles.item}>
+                <button onClick={calculatePace}>Calculate</button>
             </div>
             {pace &&
-                (<div>
+                (<div className={styles.item}>
                     Your pace is {pace}
                 </div>)
             }
-        </>
+        </div>
     )
 }
 

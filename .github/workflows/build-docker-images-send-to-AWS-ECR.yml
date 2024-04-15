@@ -22,12 +22,15 @@ jobs:
       - name: Show registry
         run: echo REGISTRY ${{ steps.login-ecr.outputs.registry }}
 
+      - name: Set tag
+        run: echo "IMAGE_TAG=$(date +'%Y%m%dT%H%M')" >> $GITHUB_ENV
+
       - name: Build, tag, and push the image to Amazon ECR
         id: build-image
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: ${{ secrets.REPO_NAME }}
-          IMAGE_TAG: 'latest'
+          IMAGE_TAG: ${{ env.IMAGE_TAG }}
         run: |
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG

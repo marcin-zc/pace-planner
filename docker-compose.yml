@@ -1,0 +1,8 @@
+services:
+  pace-planner:
+    image: marcinzc/pace-planner:20240415T1455
+    restart: always
+    ports:
+      - 3000:3000
+
+

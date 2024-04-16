@@ -2,13 +2,18 @@ name: Build Docker Image and send to AWS ECR
 run-name: ${{ github.actor }} run builds 🚀
 on: [ workflow_dispatch ]
 jobs:
-  Introduce:
+  Tests:
     runs-on: ubuntu-latest
     steps:
-    - name: Show message
-      run: echo Hello Steps
+    - name: Checkout
+      uses: actions/checkout@v4
+    - name: Use Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '21.x'
+    - run: npm test
   Create-docker-image-and-send-to-DockerHub:
-    needs: Introduce
+    needs: Tests
     runs-on: ubuntu-latest
     steps:
       - name: Checkout

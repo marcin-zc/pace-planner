@@ -19,7 +19,7 @@ function Marathon() {
         <div className={styles.marathon}>
             <div className={styles.item}>Marathon</div>
             <div className={styles.item}>
-                <label className={styles.right}>Time:</label>
+                <label data-testid='labelId' className={styles.right}>Time:</label>
                 <input type='text' onChange={(e) => setTime(e.target.value)} placeholder="HH:MM:SS"/>
             </div>
             <div className={styles.item}>

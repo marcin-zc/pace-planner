@@ -8,6 +8,7 @@ jobs:
     - name: Show message
       run: echo Hello Steps
   Create-docker-image-and-send-to-DockerHub:
+    needs: Introduce
     runs-on: ubuntu-latest
     steps:
       - name: Checkout

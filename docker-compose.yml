@@ -1,8 +1,6 @@
 services:
   pace-planner:
-    image: marcinzc/pace-planner:20240415T1455
+    image: xxxxxxxxxx.dkr.ecr.us-east-1.amazonaws.com/pace-planner:xxxxxxxxxxxx
     restart: always
     ports:
-      - 3000:3000
-
-
+      - 80:3000

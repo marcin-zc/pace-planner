@@ -1,0 +1,9 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: This config create simple service for testing
+Resources:
+  DummyServer:
+    Type: AWS::EC2::Instance
+    DeletionPolicy: "Retain"
+    Properties:
+      ImageId: "ami-051f8a213df8bc089"
+      InstanceType: "t2.micro"

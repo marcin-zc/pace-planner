@@ -1,5 +1,16 @@
 AWSTemplateFormatVersion: "2010-09-09"
 Description: Testing of creation by cloudformation VPC
+
+Parameters:
+  EnvType:
+    Description: This parameter describes the type of environment (dev,test,prod)
+    Type: String
+    AllowedValues:
+      - dev
+      - test
+      - prod
+    ConstraintDescription: must be one of three valid values
+
 Resources:
   PacePlannerVpc:
     Type: AWS::EC2::VPC
@@ -8,7 +19,8 @@ Resources:
       CidrBlock: "10.0.0.0/20"
       Tags:
         - Key: Name
-          Value: pace-planner-cf-vpc
+          Value:
+            Fn::Sub: "${EnvType}-pace-planner-cf-vpc"
   PacePlannerSubnet1:
     Type: AWS::EC2::Subnet
     DeletionPolicy: Delete
@@ -18,7 +30,8 @@ Resources:
       CidrBlock: "10.0.1.0/24"
       Tags:
         - Key: Name
-          Value: pace-planner-cf-us-east-1a
+          Value:
+            Fn::Sub: "${EnvType}-pace-planner-cf-us-east-1a"
   PacePlannerSubnet2:
     Type: AWS::EC2::Subnet
     DeletionPolicy: Delete
@@ -28,13 +41,15 @@ Resources:
       CidrBlock: "10.0.2.0/24"
       Tags:
         - Key: Name
-          Value: pace-planner-cf-us-east-1b
+          Value:
+            Fn::Sub: "${EnvType}-pace-planner-cf-us-east-1b"
   PacePlannerInternetGateway:
     Type: AWS::EC2::InternetGateway
     Properties:
       Tags:
         - Key: Name
-          Value: pace-planner-cf-ig
+          Value:
+            Fn::Sub: "${EnvType}-pace-planner-cf-ig"
   PacePlannerGatewayAttachment:
     Type: AWS::EC2::VPCGatewayAttachment
     Properties:
@@ -46,7 +61,8 @@ Resources:
       VpcId: !Ref PacePlannerVpc
       Tags:
         - Key: Name
-          Value: PacePlannerRouteTable
+          Value:
+            Fn::Sub: "${EnvType}-PacePlannerRouteTable"
   RouteForGateway:
     Type: AWS::EC2::Route
     Properties:

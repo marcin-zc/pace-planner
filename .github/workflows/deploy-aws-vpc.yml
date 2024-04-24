@@ -1,0 +1,35 @@
+name: Deploy AWS VPC
+
+on:
+  workflow_call:
+    inputs:
+      env-type:
+        required: true
+        type: string
+        description: Env type can has only dev, test or prod
+
+jobs:
+  Deploy-VPC:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+
+      - name: Deploy VPC
+        uses: aws-actions/aws-cloudformation-github-deploy@master
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: ${{ secrets.REPO_NAME }}
+          IMAGE_TAG: ${{ env.IMAGE_TAG }}
+        with:
+          name: github-action-1
+          template: infrastructure/pace-planner-vpc.yaml
+          parameter-overrides: "EnvType=${{inputs.input1}}"
+          no-fail-on-empty-changeset: "1"

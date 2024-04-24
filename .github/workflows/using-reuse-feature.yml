@@ -3,6 +3,6 @@ run-name: ${{ github.actor }} run builds 🚀
 on: [ workflow_dispatch ]
 jobs:
   say-hello-reruner:
-    uses: ./.github/workflows/reusable-feature.yml
+    uses: ./.github/workflows/deploy-aws-vpc.yml
     with:
-      input1: Marcin
+      env-type: prod

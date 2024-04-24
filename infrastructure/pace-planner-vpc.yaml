@@ -74,3 +74,8 @@ Resources:
     Properties:
       RouteTableId: !Ref PacePlannerRouteTable
       SubnetId: !Ref PacePlannerSubnet1
+
+Outputs:
+  TypeEnv:
+    Description: Name of env
+    Value: ${EnvType}

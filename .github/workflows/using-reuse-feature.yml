@@ -1,0 +1,8 @@
+name: Deploy Environment
+run-name: ${{ github.actor }} run builds 🚀
+on: [ workflow_dispatch ]
+jobs:
+  say-hello-reruner:
+    uses: ./.github/workflows/reusable-feature.yml
+    with:
+      input1: Marcin

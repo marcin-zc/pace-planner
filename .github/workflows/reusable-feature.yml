@@ -1,0 +1,20 @@
+name: My first reusable feature
+
+on:
+  workflow_call:
+    inputs:
+      input1:
+        required: true
+        type: string
+        description: This is input-1
+
+jobs:
+  say-hello-reruner:
+    name: Say Hello
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Print to Log
+        uses: actions/hello-world-javascript-action@main
+        with:
+          who-to-greet: ${{ inputs.input1 }}

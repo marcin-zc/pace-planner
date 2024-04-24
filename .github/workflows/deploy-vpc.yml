@@ -23,5 +23,6 @@ jobs:
           IMAGE_TAG: ${{ env.IMAGE_TAG }}
         with:
           name: github-action-1
-          template: infrastructure/vpc-test.yaml
+          template: infrastructure/pace-planner-vpc.yaml
+          parameter-overrides: "EnvType=test"
           no-fail-on-empty-changeset: "1"

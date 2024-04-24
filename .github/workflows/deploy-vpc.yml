@@ -1,6 +1,11 @@
 name: Deploy Environment
 run-name: ${{ github.actor }} run builds 🚀
-on: [ workflow_dispatch ]
+on:
+  workflow_dispatch:
+    inputs:
+      stackName:
+        description: "Name of stack"
+        type: string
 jobs:
   Deploy-VPC:
     runs-on: ubuntu-latest

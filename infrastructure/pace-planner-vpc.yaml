@@ -84,6 +84,3 @@ Outputs:
   TypeEnv:
     Description: "Selected env name"
     Value: !Ref EnvType
-  VPCName:
-    Description: "Name of virtual private network"
-    Value: !Select [0, !GetAtt PacePlannerVpc.Tags]

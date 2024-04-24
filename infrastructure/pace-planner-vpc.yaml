@@ -86,4 +86,4 @@ Outputs:
     Value: !Ref EnvType
   VPCName:
     Description: "Name of virtual private network"
-    Value: !GetAtt PacePlannerVpc.Tags.Name
+    Value: !GetAtt PacePlannerVpc.Tags

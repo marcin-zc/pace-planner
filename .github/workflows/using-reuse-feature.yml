@@ -2,7 +2,7 @@ name: Run Reusable Workflow
 run-name: ${{ github.actor }} run builds 🚀
 on: [ workflow_dispatch ]
 jobs:
-  say-hello-reruner:
+  run-prod-vpc-deploy:
     uses: ./.github/workflows/deploy-aws-vpc.yml
     with:
       env-type: prod

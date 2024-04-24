@@ -1,4 +1,4 @@
-name: Deploy Environment
+name: Deploy AWS VPC
 run-name: ${{ github.actor }} run builds 🚀
 on:
   workflow_dispatch:
@@ -6,6 +6,15 @@ on:
       stackName:
         description: "Name of stack"
         type: string
+        required: true
+      envType:
+        description: "Environment type"
+        required: true
+        type: choice
+        options:
+          - dev
+          - test
+          - prod
 jobs:
   Deploy-VPC:
     runs-on: ubuntu-latest
@@ -27,7 +36,7 @@ jobs:
           ECR_REPOSITORY: ${{ secrets.REPO_NAME }}
           IMAGE_TAG: ${{ env.IMAGE_TAG }}
         with:
-          name: github-action-1
+          name: ${{ inputs.stackName }}
           template: infrastructure/pace-planner-vpc.yaml
-          parameter-overrides: "EnvType=test"
+          parameter-overrides: "EnvType=${{ inputs.envType }}"
           no-fail-on-empty-changeset: "1"

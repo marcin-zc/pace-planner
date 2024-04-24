@@ -31,5 +31,5 @@ jobs:
         with:
           name: github-action-1
           template: infrastructure/pace-planner-vpc.yaml
-          parameter-overrides: "EnvType=${{inputs.input1}}"
+          parameter-overrides: "EnvType=${{inputs.env-type}}"
           no-fail-on-empty-changeset: "1"

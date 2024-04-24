@@ -45,6 +45,7 @@ Resources:
             Fn::Sub: "${EnvType}-pace-planner-cf-us-east-1b"
   PacePlannerInternetGateway:
     Type: AWS::EC2::InternetGateway
+    DeletionPolicy: Delete
     Properties:
       Tags:
         - Key: Name
@@ -52,11 +53,13 @@ Resources:
             Fn::Sub: "${EnvType}-pace-planner-cf-ig"
   PacePlannerGatewayAttachment:
     Type: AWS::EC2::VPCGatewayAttachment
+    DeletionPolicy: Delete
     Properties:
       VpcId: !Ref PacePlannerVpc
       InternetGatewayId: !Ref PacePlannerInternetGateway
   PacePlannerRouteTable:
     Type: AWS::EC2::RouteTable
+    DeletionPolicy: Delete
     Properties:
       VpcId: !Ref PacePlannerVpc
       Tags:
@@ -65,11 +68,13 @@ Resources:
             Fn::Sub: "${EnvType}-PacePlannerRouteTable"
   RouteForGateway:
     Type: AWS::EC2::Route
+    DeletionPolicy: Delete
     Properties:
       RouteTableId: !Ref PacePlannerRouteTable
       DestinationCidrBlock: "0.0.0.0/0"
       GatewayId: !Ref PacePlannerInternetGateway
   MySubnetRouteTableAssociation:
+    DeletionPolicy: Delete
     Type: AWS::EC2::SubnetRouteTableAssociation
     Properties:
       RouteTableId: !Ref PacePlannerRouteTable
@@ -77,5 +82,8 @@ Resources:
 
 Outputs:
   TypeEnv:
-    Description: Name of env
+    Description: "Selected env name"
     Value: !Ref EnvType
+  VPCName:
+    Description: "Name of virtual private network"
+    Value: !GetAtt PacePlannerVpc.Tags.Name

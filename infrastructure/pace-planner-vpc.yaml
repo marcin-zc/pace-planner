@@ -78,4 +78,4 @@ Resources:
 Outputs:
   TypeEnv:
     Description: Name of env
-    Value: ${EnvType}
+    Value: !Ref EnvType

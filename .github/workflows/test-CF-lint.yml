@@ -1,0 +1,16 @@
+name: Lint CloudFormation Templates
+run-name: ${{ github.actor }} run builds 🚀
+on: [ workflow_dispatch ]
+
+jobs:
+  Cloudformation-linter:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Testing with CFN Lint Command
+        uses: scottbrenner/cfn-lint-action@v2
+        with:
+          command: cfn-lint -t ./infrastructure/pace-planner-vpc.yaml

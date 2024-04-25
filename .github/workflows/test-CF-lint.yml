@@ -1,6 +1,13 @@
 name: Lint CloudFormation Templates
 run-name: ${{ github.actor }} run builds 🚀
-on: [ workflow_dispatch ]
+
+on:
+  workflow_call:
+    inputs:
+      cfFile:
+        required: true
+        type: string
+        description: Put the name of cloud formation file
 
 jobs:
   Cloudformation-linter:
@@ -13,4 +20,4 @@ jobs:
       - name: Testing with CFN Lint Command
         uses: scottbrenner/cfn-lint-action@v2
         with:
-          command: cfn-lint -t ./infrastructure/pace-planner-vpc.yaml
+          command: "cfn-lint -t ./infrastructure/${{inputs.cfFile}}"

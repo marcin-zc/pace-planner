@@ -16,6 +16,11 @@ on:
           - test
           - prod
 jobs:
+  Validate-cf-file:
+    uses: ./.github/workflows/validate-cf-lint-reuse.yml
+    with:
+      cfFile: pace-planner-vpc.yaml
+
   Deploy-VPC:
     runs-on: ubuntu-latest
     steps:

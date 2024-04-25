@@ -26,7 +26,6 @@ Resources:
     DeletionPolicy: Delete
     Properties:
       VpcId: !Ref PacePlannerVpc
-      AvailabilityZone: "us-east-1a"
       CidrBlock: "10.0.1.0/24"
       Tags:
         - Key: Name
@@ -37,7 +36,6 @@ Resources:
     DeletionPolicy: Delete
     Properties:
       VpcId: !Ref PacePlannerVpc
-      AvailabilityZone: "us-east-1b"
       CidrBlock: "10.0.2.0/24"
       Tags:
         - Key: Name

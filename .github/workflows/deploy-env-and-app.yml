@@ -13,14 +13,9 @@ jobs:
         id: setTagId
         run: echo "imageTag=$(date +'%Y%m%dT%H%M')" >> $GITHUB_OUTPUT
 
-  BuildDockerImageAndPushToECR:
-    needs:
-      - SetVariable
-    uses: ./.github/workflows/reuse-build-docker-images-send-to-AWS-ECR.yml
-    with:
-      IMAGE_TAG: ${{ needs.SetVariable.outputs.IMAGE-TAG }}
-    secrets:
-      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      REPO_NAME: ${{ secrets.REPO_NAME }}
-
+  ShowImageTag:
+    needs: SetVariable
+    runs-on: ubuntu-latest
+    steps:
+      - name: Show registry
+        run: echo REGISTRY ${{ needs.SetVariable.outputs.IMAGE-TAG }}

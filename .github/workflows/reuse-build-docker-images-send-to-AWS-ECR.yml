@@ -1,7 +1,16 @@
 name: Build Docker Image and send to AWS ECR
 run-name: ${{ github.actor }} run builds 🚀
 
-on: [ workflow_call ]
+on:
+  workflow_call:
+    secrets:
+      AWS_ACCESS_KEY_ID:
+        required: true
+      AWS_SECRET_ACCESS_KEY:
+        required: true
+      REPO_NAME:
+        required: true
+
 
 jobs:
   Tests:

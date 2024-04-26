@@ -1,4 +1,4 @@
-name: Build infrastructure AWS and app on EBS
+name: Build infrastructure AWS and deploy app on EBS
 run-name: ${{ github.actor }} run builds 🚀
 
 on: [ workflow_dispatch ]
@@ -6,3 +6,8 @@ on: [ workflow_dispatch ]
 jobs:
   buildDockerImageAndPushToECR:
     uses: ./.github/workflows/reuse-build-docker-images-send-to-AWS-ECR.yml
+    secrets:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      REPO_NAME: ${{ secrets.REPO_NAME }}
+

@@ -1,0 +1,31 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: Testing of creation by cloudformation VPC
+Resources:
+  PacePlannerVpc:
+    Type: AWS::EC2::VPC
+    DeletionPolicy: Delete
+    Properties:
+      CidrBlock: "10.0.0.0/20"
+      Tags:
+        - Key: Name
+          Value: pace-planner-cf-vpc
+  PacePlannerSubnet1:
+    Type: AWS::EC2::Subnet
+    DeletionPolicy: Delete
+    Properties:
+      VpcId: !Ref PacePlannerVpc
+      AvailabilityZone: "us-east-1a"
+      CidrBlock: "10.0.1.0/24"
+      Tags:
+        - Key: Name
+          Value: pace-planner-cf-us-east-1a
+  PacePlannerSubnet2:
+    Type: AWS::EC2::Subnet
+    DeletionPolicy: Delete
+    Properties:
+      VpcId: !Ref PacePlannerVpc
+      AvailabilityZone: "us-east-1b"
+      CidrBlock: "10.0.2.0/24"
+      Tags:
+        - Key: Name
+          Value: pace-planner-cf-us-east-1b

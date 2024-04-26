@@ -1,0 +1,13 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: Creation of S3 bucket for cloudformation templates
+
+Resources:
+  MyS3Bucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: pace-planner-deploy
+      LifecycleConfiguration:
+        Rules:
+          - Id: ExpireOldFiles
+            Status: Enabled
+            ExpirationInDays: 10

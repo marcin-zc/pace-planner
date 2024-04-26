@@ -4,7 +4,7 @@ run-name: ${{ github.actor }} run builds 🚀
 on:
   workflow_call:
     inputs:
-      cfFile:
+      CF_FILE:
         required: true
         type: string
         description: Put the name of cloud formation file
@@ -20,4 +20,4 @@ jobs:
       - name: Testing with CFN Lint Command
         uses: scottbrenner/cfn-lint-action@v2
         with:
-          command: "cfn-lint -t ./infrastructure/${{inputs.cfFile}}"
+          command: "cfn-lint -t ./infrastructure/${{inputs.CF_FILE}}"

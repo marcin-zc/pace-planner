@@ -1,0 +1,18 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description:
+
+Resources:
+
+  Application:
+    Type: AWS::ElasticBeanstalk::Application
+    Properties:
+      ApplicationName: "pace-planner-app"
+
+  ApplicationVersion:
+    Type: AWS::ElasticBeanstalk::ApplicationVersion
+    Properties:
+      ApplicationName: "pace-planner-app"
+      SourceBundle:
+        S3Bucket: !Ref AppS3Bucket
+        S3Key: !Ref AppS3Key
+

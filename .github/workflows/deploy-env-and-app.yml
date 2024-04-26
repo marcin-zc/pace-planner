@@ -1,7 +1,26 @@
 name: Build infrastructure AWS and deploy app on EBS
 run-name: ${{ github.actor }} run builds 🚀
 
-on: [ workflow_dispatch ]
+on:
+  workflow_dispatch:
+    inputs:
+      S3_NAME_STACK:
+        description: "Name of S3 cloudformation stack"
+        type: string
+        required: true
+      VPC_NAME_STACK:
+        description: "Name of VPC cloudformation stack"
+        type: string
+        required: true
+      ENV_TYPE:
+        description: "Environment type"
+        required: true
+        type: choice
+        options:
+          - dev
+          - test
+          - prod
+
 
 jobs:
   SetVariable:
@@ -17,7 +36,7 @@ jobs:
     needs: SetVariable
     runs-on: ubuntu-latest
     steps:
-      - name: Show registry
+      - name: Show image tag
         run: echo IMAGE-TAG ${{ needs.SetVariable.outputs.IMAGE_TAG }}
 
   BuildDockerImageAndPushToECR:
@@ -30,3 +49,14 @@ jobs:
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       REPO_NAME: ${{ secrets.REPO_NAME }}
+
+  CreateInfraVPC:
+    needs:
+      - BuildDockerImageAndPushToECR
+    uses: ./.github/workflows/reuse-deploy-vpc.yml
+    with:
+      STACK_VPC: ${{ inputs.VPC_NAME_STACK }}
+      ENV_TYPE: ${{ inputs.ENV_TYPE }}
+    secrets:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}

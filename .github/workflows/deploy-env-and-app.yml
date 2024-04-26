@@ -7,7 +7,7 @@ jobs:
   SetVariable:
     runs-on: ubuntu-latest
     outputs:
-      imageOutput: ${{ steps.setTagId.outputs.imageTag }}
+      IMAGE_TAG: ${{ steps.setTagId.outputs.imageTag }}
     steps:
       - name: Set tag
         id: setTagId
@@ -18,4 +18,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Show registry
-        run: echo IMAGE-TAG ${{ needs.SetVariable.outputs.imageOutput }}
+        run: echo IMAGE-TAG ${{ needs.SetVariable.outputs.IMAGE_TAG }}
+
+  BuildDockerImageAndPushToECR:
+    needs:
+      - SetVariable
+    uses: ./.github/workflows/reuse-build-docker-images-send-to-AWS-ECR.yml
+    with:
+      IMAGE_TAG: ${{ needs.SetVariable.outputs.IMAGE_TAG }}
+    secrets:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      REPO_NAME: ${{ secrets.REPO_NAME }}

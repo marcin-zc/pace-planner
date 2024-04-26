@@ -14,10 +14,9 @@ Parameters:
 Resources:
   MyS3Bucket:
     Type: AWS::S3::Bucket
+    DeletionPolicy: Delete
     Properties:
-      BucketName: !Sub
-        - "pace-planner-deploy-${EnvType}"
-        - EnvType: ${EnvType}
+      BucketName: !Sub "pace-planner-deploy-${EnvType}"
       LifecycleConfiguration:
         Rules:
           - Id: ExpireOldFiles

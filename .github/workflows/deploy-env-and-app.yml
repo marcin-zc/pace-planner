@@ -1,0 +1,8 @@
+name: Build infrastructure AWS and app on EBS
+run-name: ${{ github.actor }} run builds 🚀
+
+on: [ workflow_dispatch ]
+
+jobs:
+  buildDockerImageAndPushToECR:
+    uses: ./.github/workflows/reuse-build-docker-images-send-to-AWS-ECR.yml

@@ -1,0 +1,51 @@
+name: Build Docker Image and send to AWS ECR
+run-name: ${{ github.actor }} run builds 🚀
+
+on: [ workflow_call ]
+
+jobs:
+  Tests:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+    - name: Use Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '21.x'
+    - run: npm ci
+    - run: npm run build --if-present
+    - run: npm test
+  Create-docker-image-and-send-to-DockerHub:
+    needs: Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Show registry
+        run: echo REGISTRY ${{ steps.login-ecr.outputs.registry }}
+
+      - name: Set tag
+        run: echo "IMAGE_TAG=$(date +'%Y%m%dT%H%M')" >> $GITHUB_ENV
+
+      - name: Build, tag, and push the image to Amazon ECR
+        id: build-image
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: ${{ secrets.REPO_NAME }}
+          IMAGE_TAG: ${{ env.IMAGE_TAG }}
+        run: |
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG

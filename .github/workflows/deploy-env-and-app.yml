@@ -21,7 +21,6 @@ on:
           - test
           - prod
 
-
 jobs:
   SetVariable:
     runs-on: ubuntu-latest

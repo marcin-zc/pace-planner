@@ -19,7 +19,7 @@ jobs:
   Validate-cf-file:
     uses: ./.github/workflows/reuse-validate-cf-lint.yml
     with:
-      cfFile: deploy-env-and-app.yml
+      CF_FILE: deploy-env-and-app.yml
 
   Deploy-VPC:
     runs-on: ubuntu-latest

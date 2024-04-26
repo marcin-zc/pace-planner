@@ -62,10 +62,10 @@ jobs:
 
   CreateInfraS3:
     needs:
-      - BuildDockerImageAndPushToECR
+      - CreateInfraVPC
     uses: ./.github/workflows/reuse-deploy-s3.yml
     with:
-      STACK_VPC: ${{ inputs.S3_NAME_STACK }}
+      STACK_S3: ${{ inputs.S3_NAME_STACK }}
       ENV_TYPE: ${{ inputs.ENV_TYPE }}
     secrets:
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}

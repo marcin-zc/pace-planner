@@ -7,15 +7,15 @@ jobs:
   SetVariable:
     runs-on: ubuntu-latest
     outputs:
-      IMAGE-TAG: ${{ steps.setTagId.outouts.imageTag }}
+      imageOutput: ${{ steps.setTagId.outputs.imageTag }}
     steps:
       - name: Set tag
         id: setTagId
-        run: echo "imageTag=$(date +'%Y%m%dT%H%M')" >> $GITHUB_OUTPUT
+        run: echo "imageTag=$(date +'%Y%m%dT%H%M')" >> "$GITHUB_OUTPUT"
 
   ShowImageTag:
     needs: SetVariable
     runs-on: ubuntu-latest
     steps:
       - name: Show registry
-        run: echo REGISTRY ${{ needs.SetVariable.outputs.IMAGE-TAG }}
+        run: echo IMAGE-TAG ${{ needs.SetVariable.outputs.imageOutput }}

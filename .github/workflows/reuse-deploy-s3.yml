@@ -37,7 +37,7 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
 
-      - name: Deploy VPC
+      - name: Deploy S3
         uses: aws-actions/aws-cloudformation-github-deploy@master
         with:
           name: ${{ inputs.STACK_S3 }}

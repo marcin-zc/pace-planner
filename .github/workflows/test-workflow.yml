@@ -1,0 +1,34 @@
+name: Test Workflow
+run-name: ${{ github.actor }} run builds 🚀
+
+on:
+  workflow_dispatch:
+    inputs:
+      S3_NAME_STACK:
+        description: "Name of S3 cloudformation stack"
+        type: string
+        required: true
+      VPC_NAME_STACK:
+        description: "Name of VPC cloudformation stack"
+        type: string
+        required: true
+      ENV_TYPE:
+        description: "Environment type"
+        required: true
+        type: choice
+        options:
+          - dev
+          - test
+          - prod
+
+jobs:
+  CreateInfraS3:
+    needs:
+      - CreateInfraVPC
+    uses: ./.github/workflows/reuse-deploy-s3.yml
+    with:
+      STACK_S3: ${{ inputs.S3_NAME_STACK }}
+      ENV_TYPE: ${{ inputs.ENV_TYPE }}
+    secrets:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}

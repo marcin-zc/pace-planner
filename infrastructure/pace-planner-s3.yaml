@@ -1,11 +1,21 @@
 AWSTemplateFormatVersion: "2010-09-09"
 Description: Creation of S3 bucket for cloudformation templates
 
+Parameters:
+  EnvType:
+    Description: This parameter describes the type of environment (dev,test,prod)
+    Type: String
+    AllowedValues:
+      - dev
+      - test
+      - prod
+    ConstraintDescription: must be one of three valid values
+
 Resources:
   MyS3Bucket:
     Type: AWS::S3::Bucket
     Properties:
-      BucketName: pace-planner-deploy
+      BucketName: pace-planner-deploy-${EnvType}
       LifecycleConfiguration:
         Rules:
           - Id: ExpireOldFiles

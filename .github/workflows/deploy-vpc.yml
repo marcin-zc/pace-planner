@@ -17,7 +17,7 @@ on:
           - prod
 jobs:
   Validate-cf-file:
-    uses: ./.github/workflows/validate-cf-lint-reuse.yml
+    uses: ./.github/workflows/reuse-validate-cf-lint.yml
     with:
       cfFile: pace-planner-vpc.yaml
 

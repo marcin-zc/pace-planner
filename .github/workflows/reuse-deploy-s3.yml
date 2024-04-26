@@ -22,7 +22,7 @@ jobs:
     with:
       CF_FILE: pace-planner-s3.yaml
 
-  Deploy-VPC:
+  Deploy-S3:
     runs-on: ubuntu-latest
     needs:
       - Validate-cf-file

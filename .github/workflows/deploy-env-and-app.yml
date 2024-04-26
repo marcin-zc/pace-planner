@@ -4,8 +4,17 @@ run-name: ${{ github.actor }} run builds 🚀
 on: [ workflow_dispatch ]
 
 jobs:
-  buildDockerImageAndPushToECR:
+  SetVariable:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set tag
+        run: echo "IMAGE_TAG=$(date +'%Y%m%dT%H%M')" >> $GITHUB_ENV
+  BuildDockerImageAndPushToECR:
+    needs:
+      - SetVariable
     uses: ./.github/workflows/reuse-build-docker-images-send-to-AWS-ECR.yml
+    with:
+      IMAGE_TAG: $IMAGE_TAG
     secrets:
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}

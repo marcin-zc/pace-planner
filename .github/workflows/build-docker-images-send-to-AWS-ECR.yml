@@ -3,6 +3,7 @@ run-name: ${{ github.actor }} run builds 🚀
 on: [ workflow_dispatch ]
 jobs:
   Tests:
+    name: Test Application
     runs-on: ubuntu-latest
     steps:
     - name: Checkout

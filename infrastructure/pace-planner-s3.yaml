@@ -15,7 +15,9 @@ Resources:
   MyS3Bucket:
     Type: AWS::S3::Bucket
     Properties:
-      BucketName: pace-planner-deploy-${EnvType}
+      BucketName: !Sub
+        - "pace-planner-deploy-${EnvType}"
+        - EnvType: ${EnvType}
       LifecycleConfiguration:
         Rules:
           - Id: ExpireOldFiles

@@ -40,7 +40,7 @@ jobs:
       - name: Deploy S3
         uses: aws-actions/aws-cloudformation-github-deploy@master
         with:
-          name: stack-vpc-${{ inputs.SUFFIX_STACK}}
+          name: stack-s3-${{ inputs.SUFFIX_STACK}}
           template: infrastructure/pace-planner-s3.yaml
           parameter-overrides: "EnvType=${{ inputs.ENV_TYPE }}"
           no-fail-on-empty-changeset: "1"

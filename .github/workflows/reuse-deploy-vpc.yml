@@ -17,10 +17,10 @@ on:
         required: true
 jobs:
   Validate-cf-file:
-    name: Validation pace-planner-vpc.yml cloudformation file
+    name: Validation pace-planner-vpc.yaml cloudformation file
     uses: ./.github/workflows/reuse-validate-cf-lint.yml
     with:
-      CF_FILE: pace-planner-vpc.yml
+      CF_FILE: pace-planner-vpc.yaml
 
   Deploy-VPC:
     runs-on: ubuntu-latest

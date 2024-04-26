@@ -4,14 +4,11 @@ run-name: ${{ github.actor }} run builds 🚀
 on:
   workflow_dispatch:
     inputs:
-      S3_NAME_STACK:
-        description: "Name of S3 cloudformation stack"
+      SUFFIX_STACK:
+        description: "This is a suffix which will be added at the end of name stack"
         type: string
-        required: true
-      VPC_NAME_STACK:
-        description: "Name of VPC cloudformation stack"
-        type: string
-        required: true
+        required: false
+        default: "000"
       ENV_TYPE:
         description: "Environment type"
         required: true
@@ -54,7 +51,7 @@ jobs:
       - BuildDockerImageAndPushToECR
     uses: ./.github/workflows/reuse-deploy-vpc.yml
     with:
-      STACK_VPC: ${{ inputs.VPC_NAME_STACK }}
+      SUFFIX_STACK: ${{ inputs.SUFFIX_STACK }}
       ENV_TYPE: ${{ inputs.ENV_TYPE }}
     secrets:
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -65,7 +62,7 @@ jobs:
       - CreateInfraVPC
     uses: ./.github/workflows/reuse-deploy-s3.yml
     with:
-      STACK_S3: ${{ inputs.S3_NAME_STACK }}
+      SUFFIX_STACK: ${{ inputs.SUFFIX_STACK }}
       ENV_TYPE: ${{ inputs.ENV_TYPE }}
     secrets:
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}

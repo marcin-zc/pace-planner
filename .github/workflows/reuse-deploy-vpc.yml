@@ -4,7 +4,7 @@ run-name: ${{ github.actor }} run builds 🚀
 on:
   workflow_call:
     inputs:
-      STACK_VPC:
+      SUFFIX_STACK:
         required: true
         type: string
       ENV_TYPE:
@@ -40,7 +40,7 @@ jobs:
       - name: Deploy VPC
         uses: aws-actions/aws-cloudformation-github-deploy@master
         with:
-          name: ${{ inputs.STACK_VPC }}
+          name: stack-vpc-${{ inputs.SUFFIX_STACK}}
           template: infrastructure/pace-planner-vpc.yaml
           parameter-overrides: "EnvType=${{ inputs.ENV_TYPE }}"
           no-fail-on-empty-changeset: "1"
